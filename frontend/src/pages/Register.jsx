@@ -1,5 +1,5 @@
 "use client";
-
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { z } from "zod";
 import MainHeader from "../components/MainHeader";
@@ -12,6 +12,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState([]);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,13 +31,16 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://task-manager-5yos.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
       if (!response.ok) {
@@ -48,6 +52,7 @@ export default function Register() {
       setEmail("");
       setPassword("");
       setError([]);
+      navigate("/tasks")
     } catch (err) {
       setError([err.message]);
     }

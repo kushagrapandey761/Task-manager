@@ -36,13 +36,16 @@ export default function Tasks() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/tasks", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://task-manager-5yos.onrender.com/api/tasks",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch tasks");
@@ -74,7 +77,7 @@ export default function Tasks() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/subtasks/${task._id}`,
+        `https://task-manager-5yos.onrender.com/api/subtasks/${task._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -100,14 +103,17 @@ export default function Tasks() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/subtasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(newSubTask),
-      });
+      const response = await fetch(
+        "https://task-manager-5yos.onrender.com/api/subtasks",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newSubTask),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to add sub-task");
 
@@ -126,7 +132,7 @@ export default function Tasks() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/subtasks/${subTask._id}/status`,
+        `https://task-manager-5yos.onrender.com/api/subtasks/${subTask._id}/status`,
         {
           method: "PUT",
           headers: {
@@ -179,7 +185,7 @@ export default function Tasks() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${selectedTask._id}`,
+        `https://task-manager-5yos.onrender.com/api/tasks/${selectedTask._id}`,
         {
           method: "PUT",
           headers: {
@@ -206,7 +212,7 @@ export default function Tasks() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${selectedTask._id}`,
+        `https://task-manager-5yos.onrender.com/api/tasks/${selectedTask._id}`,
         {
           method: "DELETE",
           headers: {
@@ -232,14 +238,17 @@ export default function Tasks() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:5000/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(newTask),
-      });
+      const response = await fetch(
+        "https://task-manager-5yos.onrender.com/api/tasks",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newTask),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create task");
@@ -269,7 +278,7 @@ export default function Tasks() {
     <>
       <div className="flex bg-[#27445D] h-screen justify-center">
         <div className="w-[90%] mt-10">
-          <div className="flex flex-row justify-center space-x-96">
+          <div className="flex flex-row justify-center space-x-80">
             <button
               onClick={handlePendingClick}
               className={`font-arima font-semibold text-white border border-white p-4 rounded-xl ${
@@ -291,6 +300,15 @@ export default function Tasks() {
               className={`font-arima font-semibold text-white border border-white p-4 rounded-xl`}
             >
               Add Task
+            </button>
+            <button
+              onClick={()=>{
+                localStorage.removeItem("token");
+                navigate("/login");
+              }}
+              className={`font-arima font-semibold text-white border border-white p-4 rounded-xl`}
+            >
+              Log Out
             </button>
           </div>
 
